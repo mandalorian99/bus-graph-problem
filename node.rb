@@ -23,22 +23,25 @@ class Node
 
   # check if node exists or not 
   def self.exists(node_obj)
-
+  
     @@obj_refs.each do |obj|
+     
       name1 = obj.get_value
       name2 = node_obj.get_value
       
       temp = obj 
       
       if obj != node_obj 
+        
         if name2 == name1 
+          node_obj.delete() 
           return temp
         end   
-      else 
-        return false 
-      end 
 
+      end 
+  
     end 
+    return false 
   end
 
   def get_value 
@@ -53,6 +56,10 @@ class Node
 
   def self.count
     @@obj_refs 
+  end
+
+  def delete
+    @@obj_refs.delete_if{ |obj| obj == self } 
   end
 
 end 
