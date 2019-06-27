@@ -32,8 +32,9 @@ class App
 
     end
     
-    Node.all
-
+    #Node.all
+    result = Node.distance('A','E','D')
+    puts "distance of route => #{result}"
   end
 
 end

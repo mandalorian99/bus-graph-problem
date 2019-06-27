@@ -3,6 +3,7 @@
 
 class Node
   @@obj_refs = Array.new 
+  @@weight = 0
 
   def initialize(value)
     @name = value 
@@ -61,5 +62,63 @@ class Node
   def delete
     @@obj_refs.delete_if{ |obj| obj == self } 
   end
+
+  # get object of named value 
+  def self.get_obeject(name)
+
+    @@obj_refs.each do |node|
+      if name == node.get_value
+        return node 
+      end
+    end
+
+  end
+
+  # calculate distance between any given nodes 
+  def self.distance(*nodes)
+  if !nodes.include? nil 
+    #p nodes 
+    node_stack = []
+    nodes = nodes.reverse
+   # p nodes 
+    nodes.each do |source|
+      node_stack << Node.get_obeject(source)
+    end
+    
+    current = node_stack.pop
+    terminal = node_stack.last
+
+    
+      @@weight += self.calculate_weight(current,terminal)
+      
+      #p "------self calling------"
+      nodes.pop 
+      var1 , var2 = nodes.reverse
+      self.distance(var1 ,var2)
+
+  end 
+
+  @@weight
+
+  end 
+
+  # calculate weight between two nodes only 
+  # and return weight 
+
+  def self.calculate_weight(current,terminal)
+
+    current_adjacent_nodes = current.instance_variable_get("@adjacent_nodes")
+    current_nodes_weight = current.instance_variable_get("@weight")
+
+    if current_adjacent_nodes.include? terminal.get_value
+      # find index of terminal adjacent node
+      index = current_adjacent_nodes.index(terminal.get_value)
+      weight = current_nodes_weight.at(index)
+      return weight
+    else
+      puts "XXX NO ROAD current to terminal node XXX"
+    end
+
+  end 
 
 end 
