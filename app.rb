@@ -6,6 +6,7 @@ class App
 
   def self.launch
 
+    # Loads data from file to objects 
     IO.foreach('data.txt') do |line| 
 
       if Node.count == 0
@@ -23,8 +24,7 @@ class App
           
           m = Node.exists(n)
           m.add_edges(line[1] , line[2])
-        else 
-          
+
         end
         #Node.delete(n)
         #p n 
@@ -33,8 +33,11 @@ class App
     end
     
     #Node.all
-    result = Node.distance('A','E','D')
-    puts "distance of route => #{result}"
+    #result = Node.distance('A','E','D')
+    #puts "distance of route => #{result}"
+
+    # finding possible paths b/w source and terminal 
+    Node.find_paths('C','C')
   end
 
 end
