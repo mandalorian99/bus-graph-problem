@@ -33,11 +33,11 @@ class App
     end
     
     #Node.all
-    #result = Node.distance('A','E','D')
+    #result = Node.distance('A','D','C')
     #puts "distance of route => #{result}"
 
     # finding possible paths b/w source and terminal 
-    Node.find_paths('C','C')
+    puts Node.find_paths('A','C')
   end
 
 end
