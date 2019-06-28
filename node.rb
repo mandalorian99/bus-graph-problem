@@ -4,6 +4,7 @@
 class Node
   @@obj_refs = Array.new 
   @@weight = 0
+  @@count = 0
 
   def initialize(value)
     @name = value 
@@ -63,17 +64,6 @@ class Node
     @@obj_refs.delete_if{ |obj| obj == self } 
   end
 
-  # get object of named value 
-  def self.get_obeject(name)
-
-    @@obj_refs.each do |node|
-      if name == node.get_value
-        return node 
-      end
-    end
-
-  end
-
   # calculate distance between any given nodes 
   def self.distance(*nodes)
   if !nodes.include? nil 
@@ -120,7 +110,7 @@ class Node
     end
 
   end 
-
+=begin
   # find best paths 
   def self.find_paths(source , terminal)
 
@@ -150,11 +140,12 @@ class Node
 
   
   end
+=end
   # return childrens of a object 
   def children
     @adjacent_nodes
   end
-  
+=begin
   # helper for find_path
   def self.traverse(source1 , terminal1 , nodes1 )
     root1 = Node.get_obeject(source1) 
@@ -167,11 +158,9 @@ class Node
 
       child1 =sub_child_stack.pop
 
-      if child1 != nil || child1 != terminal1 
+      if child1 != nil
         p "traverse for #{child1} sub childs"
         self.traverse(child1,terminal1,nodes1)
-      else 
-        p "de array the fucks"
       end
 
       break if child1 == nil 
@@ -186,4 +175,57 @@ class Node
     end
 
   end
+=end
+
+  # get object of named value 
+  def self.get_obeject(name)
+    #p "evoked...get object -> #{name}"
+      @@obj_refs.each do |node|
+        #p node.get_value
+        if name == node.get_value
+          return node 
+        end
+      end
+      return nil 
+  
+    end
+
+  # find count of how many paths there exists 
+  # for any given point X and Y
+  def self.find_paths(source,terminal)
+  
+    #p "----------#{source}---#{@@count}---------------"
+    root = Node.get_obeject(source)
+    #p root
+    if root == nil 
+      #p " in nil"
+      has_child = false 
+    else 
+      #p "not nill , get childs"
+      child_stack = root.children 
+      has_child = true
+    end
+
+    
+    #p child_stack
+
+    if source == terminal and has_child
+      @@count += 1
+    end
+
+    if has_child
+      loop do 
+        child = child_stack.pop 
+        #p "loop for child #{child}----"
+        if child != nil 
+          Node.find_paths(child , terminal)
+        else 
+          break 
+        end
+      end
+    end 
+    "no of paths b/w #{source} to #{terminal} = #{@@count}"
+
+  end
+
 end 
