@@ -110,72 +110,11 @@ class Node
     end
 
   end 
-=begin
-  # find best paths 
-  def self.find_paths(source , terminal)
 
-    nodes = Array.new 
-    weight = 0 
-
-    root = Node.get_obeject(source)
-    nodes << root.get_value 
-    child_stack = root.children  
-    
-    loop do 
-
-      child = child_stack.pop 
-      p "#{child}===> #{nodes}"
-      if child != nil 
-        p "traverse for #{child} childs"
-      path_nodes = self.traverse(child,terminal,nodes)
-       p "  nodes_paths of #{child} is"
-       p path_nodes
-      end 
-
-      break if child ==nil 
-    end 
-    # call function recursevily
-
-
-
-  
-  end
-=end
   # return childrens of a object 
   def children
     @adjacent_nodes
   end
-=begin
-  # helper for find_path
-  def self.traverse(source1 , terminal1 , nodes1 )
-    root1 = Node.get_obeject(source1) 
-    
-    if root1.get_value != terminal1
-      nodes1 << root1.get_value
-      #p nodes 
-      sub_child_stack = root1.children
-      loop do 
-
-      child1 =sub_child_stack.pop
-
-      if child1 != nil
-        p "traverse for #{child1} sub childs"
-        self.traverse(child1,terminal1,nodes1)
-      end
-
-      break if child1 == nil 
-
-    end 
-      #self.traverse(child,terminal,nodes)
-      
-    else 
-      nodes1 << terminal1 
-      p "found path #{nodes1}"
-      return nodes1 
-    end
-
-  end
-=end
 
   # get object of named value 
   def self.get_obeject(name)
@@ -194,22 +133,23 @@ class Node
   # for any given point X and Y
   def self.find_paths(source,terminal)
   
-    #p "----------#{source}---#{@@count}---------------"
+    p "----------#{source}---#{@@count}---------------"
     root = Node.get_obeject(source)
+    p root
+    p "obect catched.."
     #p root
-    if root == nil 
-      #p " in nil"
+    if root == nil or source == terminal
+      p " path terinated..."
       has_child = false 
     else 
-      #p "not nill , get childs"
+      p "has child..."
       child_stack = root.children 
+      p child_stack
       has_child = true
     end
-
     
-    #p child_stack
-
-    if source == terminal and has_child
+    if source == terminal 
+      p "source equals to terminal , incrementing..."
       @@count += 1
     end
 
